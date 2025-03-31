@@ -1,10 +1,9 @@
 #/usr/bin/env bash #this indicates our script will be shebang . 
 echo 'Starting deployment ....'
-aws ecr get-login-password
-
+aws ecr get-login-password --region ap-south-1 | sudo docker login --username AWS --password-stdin 730335526126.dkr.ecr.ap-south-1.amazonaws.com
 #create image
-docker build -t ecr_repo/my-node-app:latest . 
-docker push ecr_repo/my-node-app:latest
-
+sudo docker build -t sapna/node-app .
+sudo docker tag sapna/node-app:latest 730335526126.dkr.ecr.ap-south-1.amazonaws.com/sapna/node-app:latest
+sudo docker push 730335526126.dkr.ecr.ap-south-1.amazonaws.com/sapna/node-app:latest
 #clean up process 
-docker image rm ecr_repo/my-node-app:latest
+sudo docker image rm ecr_repo/my-node-app:latest
